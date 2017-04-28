@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Vigenere Cipher Cryptoanalysis</title>
+</head>
+<body>
+<header>
+    <div class="settings">
+        <div class="radio-btns">
+            <input id="decode" type="radio" name="encryptionType">
+            <label for="decode">Decryption</label>
+            <input id="encode" type="radio" name="encryptionType" checked>
+            <label for="encode">Encryption</label>
+        </div>
+        <div class="key">
+            <input id="key" type="text" placeholder="Key">
+        </div>
+    </div>
+</header>
+
+<div id="main" class="main">
+
+    <div class="decrypted">
+        <div class="settings">
+
+            <span>Decrypted&nbsp;text&nbsp;(default)</span>
+
+
+
+            <div id="alphabet" class="alphabet">
+                <select id="language">
+                    <option value="EN">English</option>
+                    <option value="RU">Русский</option>
+                </select>
+            </div>
+
+
+        </div>
+
+        <textarea id="decrypted" class="source"></textarea>
+
+    </div>
+
+    <div class="encrypted">
+        <div class="settings">
+            <span>Encrypted&nbsp;text</span>
+            <div id="method" class="method">
+                <select id="cryptanalysis-method">
+                    <option value="AUTO">Auto</option>
+                    <option value="SBS">Step by step</option>
+                </select>
+            </div>
+            <button id="cryptanalysis" class="cryptanalysis">Cryptanalysis</button>
+        </div>
+        <textarea id="encrypted" class="output" disabled></textarea>
+    </div>
+
+
+</div>
+
+<div class="user-created-alphabet hidden">
+    <button class="close-btn">X</button>
+    <h1>Пользовательский алфавит</h1>
+
+    <div class="content">
+        <table>
+            <tr>
+                <th class="first-cell">№</th>
+                <th class="second-cell">Буква</th>
+                <th class="third-cell">Частота буквы</th>
+            </tr>
+            <tr>
+                <td class="first-cell"><input value="1"></td>
+                <td class="second-cell"><input value="А"></td>
+                <td class="third-cell"><input value="0.007"></td>
+            </tr>
+            <tr>
+                <td class="first-cell"><input value="2"></td>
+                <td class="second-cell"><input value="Б"></td>
+                <td class="third-cell"><input value="0.009"></td>
+            </tr>
+        </table>
+    </div>
+
+    <h1>Settings</h1>
+    <div class="content">
+        <div class="settings">
+            <div class="add">+</div>
+            <div class="delete">-</div>
+            <div class="amount">
+                <input type="text" placeholder="Кол-во">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="step-by-step" class="step-by-step hidden">
+    <button class="close-btn">X</button>
+    <h1>1 STEP</h1>
+    <h2>Select length of key</h2>
+    <div class="content">
+        <div class="mini-form">
+            <span>Possible key length</span>
+            <input id="key-length" value="5">
+            <button id="start-step2">OK</button>
+        </div>
+        <div class="chart">
+            <div id="columns" class="columns">
+            </div>
+            <div id="key-lengths" class="key-lengths">
+            </div>
+        </div>
+    </div>
+
+    <div id="step2" class="hidden">
+        <h1>2 STEP</h1>
+        <div class="content">
+            <div class="mini-form">
+                <span>Possible key</span>
+                <input id="possible-key">
+                <button id="key-found">OK</button>
+            </div>
+            <textarea id="possible-text"></textarea>
+        </div>
+    </div>
+</div>
+<footer></footer>
+
+
+<script src="scripts.js"></script>
+</body>
+</html>
