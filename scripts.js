@@ -291,13 +291,18 @@
     }
 
     function getClearText(lang, text) {
-        var clearText = "";
+        /*var clearText = "";
         for(var i = 0; i < text.length; i++) {
             if(isLetter(lang, text[i])) {
                 clearText += text[i];
             }
         }
-        return clearText;
+        return clearText;*/
+
+        var alphabet = alphabets[lang];
+        var re = new RegExp("/[^"+alphabet+"/", "gi");
+
+        return text.replace(re, "");
     }
 
     function isLetter(lang, char) {
