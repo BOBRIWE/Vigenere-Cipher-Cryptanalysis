@@ -90,14 +90,14 @@
         textAreaAdjust(encryptedAreaID);
     };
 
-    document.getElementById("key-found").addEventListener("click",function() {
+    document.getElementById("key-found").addEventListener("click", function() {
         document.getElementById("step-by-step").className += " hidden";
         document.getElementById("step2").className += " hidden";
 
         keyID.value = document.getElementById("possible-key").value;
 
         encryptedAreaID.dispatchEvent(inputEvent);
-    },false);
+    }, false);
 
     document.getElementById("cryptanalysis").addEventListener("click", function() {
         if(cryptanalysisMethod.value === "SBS") {
@@ -292,15 +292,15 @@
 
     function getClearText(lang, text) {
         /*var clearText = "";
-        for(var i = 0; i < text.length; i++) {
-            if(isLetter(lang, text[i])) {
-                clearText += text[i];
-            }
-        }
-        return clearText;*/
+         for(var i = 0; i < text.length; i++) {
+         if(isLetter(lang, text[i])) {
+         clearText += text[i];
+         }
+         }
+         return clearText;*/
 
         var alphabet = alphabets[lang];
-        var re = new RegExp("/[^"+alphabet+"/", "gi");
+        var re = new RegExp("[^" + alphabet + "]", "gi");
 
         return text.replace(re, "");
     }
@@ -448,6 +448,7 @@
             var num = numOfLetters[letter];
             ic += num * (num - 1) / (strLength * (strLength - 1));
         }
+
 
         return ic;
     }
@@ -622,7 +623,6 @@
     }
 
     function VigenereCryptoanalisys(lang, text) {
-        var speedTest = [];
 
         var Alphabet = alphabets[lang];
         var clearText = getClearText(lang, text).toLowerCase();
@@ -642,12 +642,11 @@
             for(var j = 2; j < maxICPeriod; j++) {
 
 
-                speedTest[j - 2] = performance.now();
                 var splittedText = getSplittedText(clearText, j);
 
-                speedTest[j - 2] = performance.now() - speedTest[j - 2];
 
                 var avgICTemp = 0;
+
 
                 for(var i = 0; i < splittedText.length; i++) {
 
@@ -655,9 +654,7 @@
 
                 }
 
-
                 this.avgICs.push(avgICTemp / i);
-
 
             }
             // alert(speedTest);
