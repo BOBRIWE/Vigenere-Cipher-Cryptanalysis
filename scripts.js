@@ -100,6 +100,8 @@
     }, false);
 
     document.getElementById("cryptanalysis").addEventListener("click", function() {
+        var speedtest = performance.now();
+
         if(cryptanalysisMethod.value === "SBS") {
             cryptanalysisStep1();
         } else {
@@ -109,6 +111,8 @@
 
             encryptedAreaID.dispatchEvent(inputEvent);
         }
+
+        console.log(performance.now() - speedtest);
     }, false);
 
     document.getElementById("start-step2").addEventListener("click", function() {
@@ -201,6 +205,7 @@
 
         textAreaAdjust(decryptedAreaID);
         textAreaAdjust(encryptedAreaID);
+
 
     }
 
@@ -639,6 +644,7 @@
         this.getICs = function() {
 
 
+            var speedtest = performance.now();
             for(var j = 2; j < maxICPeriod; j++) {
 
 
@@ -657,6 +663,7 @@
                 this.avgICs.push(avgICTemp / i);
 
             }
+            console.log(performance.now() - speedtest);
             // alert(speedTest);
             // alert(speedTest.length);
             return this.avgICs;
