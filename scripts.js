@@ -8,11 +8,14 @@
     };
     var decryptedAreaID = document.getElementById("decrypted");
     var encryptedAreaID = document.getElementById("encrypted");
+    var sourceID = document.getElementsByClassName("source")[0];
+    var outputID = document.getElementsByClassName("output")[0];
     var languageID = document.getElementById("language");
     var keyID = document.getElementById("key");
     var cryptanalysisMethod = document.getElementById("cryptanalysis-method");
     var MAXKEYLN = 502;
-    var process = "ENCODE";
+    var processID = document.getElementById("process");
+    var launchMainClasses = document.getElementsByClassName("launch-main");
     var lettersFreq = {
         "RU": {
             "а": 0.07998,
@@ -96,23 +99,24 @@
 
         keyID.value = document.getElementById("possible-key").value;
 
-        encryptedAreaID.dispatchEvent(inputEvent);
+        processID.value = "DECODE";
+        sourceID.dispatchEvent(inputEvent);
     }, false);
 
     document.getElementById("cryptanalysis").addEventListener("click", function() {
-        var speedtest = performance.now();
 
         if(cryptanalysisMethod.value === "SBS") {
             cryptanalysisStep1();
         } else {
-            var VC = new VigenereCryptoanalisys(languageID.value, encryptedAreaID.value);
+            var VC = new VigenereCryptanalysis(languageID.value, decryptedAreaID.value);
             keyID.value = VC.getKeyWord(VC.getKeyLength(VC.getICs()));
-            alert("Key is: " + keyID.value);
 
-            encryptedAreaID.dispatchEvent(inputEvent);
+
+            processID.value = "DECODE";
+            sourceID.dispatchEvent(inputEvent);
+            alert("Key is: " + keyID.value);
         }
 
-        console.log(performance.now() - speedtest);
     }, false);
 
     document.getElementById("start-step2").addEventListener("click", function() {
@@ -128,30 +132,30 @@
         }, false);
     }
 
-    document.getElementById("decode").addEventListener("click", function() {
-        switchArea(decryptedAreaID, encryptedAreaID);
-        process = "DECODE";
-    }, false);
+    /*document.getElementById("decode").addEventListener("click", function() {
+     switchArea(decryptedAreaID, encryptedAreaID);
+     process = "DECODE";
+     }, false);
 
-    document.getElementById("encode").addEventListener("click", function() {
-        switchArea(encryptedAreaID, decryptedAreaID);
-        process = "ENCODE";
-    }, false);
+     document.getElementById("encode").addEventListener("click", function() {
+     switchArea(encryptedAreaID, decryptedAreaID);
+     process = "ENCODE";
+     }, false);*/
 
     var Delay = 1500;
 
     var delayedFnDecrypted = makeDelayedFn(function() {
         encryptedAreaID.value += "...";
-        main(process);
+        main(processID.value);
     }, Delay);
 
     var delayedFnEncrypted = makeDelayedFn(function() {
         decryptedAreaID.value += "...";
-        main(process);
+        main(processID.value);
     }, Delay);
 
     var delayedFnKey = makeDelayedFn(function() {
-        main(process);
+        main(processID.value);
     }, Delay);
 
     decryptedAreaID.addEventListener("input", function() {
@@ -170,18 +174,25 @@
     }, false);
 
 
+    for(var i = 0; i < launchMainClasses.length; i++) {
+        launchMainClasses[i].addEventListener("change", function() {
+            main(processID.value);
+        }, false)
+    }
+
+
     //MAIN
     function main(mode) {
         keyID.value = deleteSpaces(keyID.value);
         var keyText = keyID.value;
         var language = languageID.value;
 
-        var Text = "";
-        if(mode === "ENCODE") {
+        var Text = sourceID.value.trim();
+        /*if(mode === "ENCODE") {
             Text = decryptedAreaID.value.trim();
         } else {
             Text = encryptedAreaID.value.trim();
-        }
+        }*/
 
 
         if(!isKey(language, keyText) || (Text === "")) {
@@ -197,11 +208,12 @@
         }
 
 
-        if(mode === "ENCODE") {
+        outputID.value = newText;
+        /*if(mode === "ENCODE") {
             encryptedAreaID.value = newText;
         } else {
             decryptedAreaID.value = newText;
-        }
+        }*/
 
         textAreaAdjust(decryptedAreaID);
         textAreaAdjust(encryptedAreaID);
@@ -215,7 +227,7 @@
         }
         document.getElementById("step-by-step").classList.remove("hidden");
 
-        var VC = new VigenereCryptoanalisys(languageID.value, encryptedAreaID.value);
+        var VC = new VigenereCryptanalysis(languageID.value, sourceID.value);
         var ICs = VC.getICs();
 
         document.getElementById("key-length").value = VC.getKeyLength(ICs);
@@ -241,8 +253,8 @@
             return;
         }
 
-        var text = encryptedAreaID.value;
-        var VC = new VigenereCryptoanalisys(languageID.value, text);
+        var text = sourceID.value;
+        var VC = new VigenereCryptanalysis(languageID.value, text);
         var keyWord = VC.getKeyWord(keyLength);
 
         document.getElementById("possible-key").value = keyWord;
@@ -627,7 +639,7 @@
         return x;
     }
 
-    function VigenereCryptoanalisys(lang, text) {
+    function VigenereCryptanalysis(lang, text) {
 
         var Alphabet = alphabets[lang];
         var clearText = getClearText(lang, text).toLowerCase();
@@ -644,7 +656,6 @@
         this.getICs = function() {
 
 
-            var speedtest = performance.now();
             for(var j = 2; j < maxICPeriod; j++) {
 
 
@@ -663,9 +674,9 @@
                 this.avgICs.push(avgICTemp / i);
 
             }
-            console.log(performance.now() - speedtest);
-            // alert(speedTest);
-            // alert(speedTest.length);
+
+            console.log(this.avgICs.join("\n"));
+
             return this.avgICs;
         };
 
