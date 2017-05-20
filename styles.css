@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 
 html, body {
@@ -48,7 +48,7 @@ input, textarea {
 .settings > .radio-btns {
     width: 50%;
     height: 50%;
-    margin: 0px auto;
+    margin: 0 auto;
 }
 
 .radio-btns > input[type="radio"] {
@@ -262,7 +262,7 @@ header > .settings {
 }
 
 .content {
-    margin: 20px auto 0px 70px;
+    margin: 20px auto 0 70px;
 }
 
 .content > * {
@@ -277,7 +277,7 @@ header > .settings {
     display: block;
     width: 80%;
     height: auto;
-    margin: 10px 0px;
+    margin: 10px 0;
     overflow: hidden;
 }
 
@@ -291,7 +291,7 @@ header > .settings {
     float: left;
 }
 
-.mini-form > button {
+.mini-form > button, a {
     width: 10%;
     float: left;
     border-left: 2px solid #3c3f41;
@@ -340,10 +340,9 @@ header > .settings {
 .key-length, .column {
     width: 27px;
     height: 100%;
-    margin: 0px 10px;
+    margin: 0 10px;
     text-align: center;
     display: inline-block;
-    height: 100%;
     position: relative;
 }
 

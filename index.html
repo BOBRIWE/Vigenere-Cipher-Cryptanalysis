@@ -104,7 +104,7 @@
         <div class="mini-form">
             <span>Possible key length</span>
             <input id="key-length" value="5">
-            <button id="start-step2">OK</button>
+            <a href="#link-step2"><button id="start-step2">OK</button></a>
         </div>
         <div class="chart">
             <div id="columns" class="columns">
@@ -116,13 +116,17 @@
 
     <div id="step2" class="hidden">
         <h1>2 STEP</h1>
+        <a name="link-step2"></a>
         <div class="content">
             <div class="mini-form">
                 <span>Possible key</span>
                 <input id="possible-key">
-                <button id="key-found">OK</button>
+                <button id="key-change">OK</button>
             </div>
             <textarea id="possible-text"></textarea>
+            <br>
+            <br>
+            <button id="key-found">OK</button>
         </div>
     </div>
 </div>

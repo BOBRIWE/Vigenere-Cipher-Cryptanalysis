@@ -6,6 +6,7 @@
         "RU": "абвгдежзийклмнопрстуфхцчшщыьъэюя",
         "EN": "abcdefghijklmnopqrstuvwxyz"
     };
+    var htmlID = document.getElementsByTagName("html")[0];
     var decryptedAreaID = document.getElementById("decrypted");
     var encryptedAreaID = document.getElementById("encrypted");
     var sourceID = document.getElementsByClassName("source")[0];
@@ -103,6 +104,20 @@
         sourceID.dispatchEvent(inputEvent);
     }, false);
 
+    document.getElementById("key-change").addEventListener("click", function() {
+        var text = sourceID.value;
+        var keyWord = getClearText(languageID.value,
+            document.getElementById("possible-key").value.trim());
+
+        if(!keyWord) {
+            return;
+        }
+
+        document.getElementById("possible-text").value =
+            getDecodedVigenereText(languageID.value, text.substr(0, 200), keyWord)
+            + "...";
+    }, false);
+
     document.getElementById("cryptanalysis").addEventListener("click", function() {
 
         if(cryptanalysisMethod.value === "SBS") {
@@ -189,10 +204,10 @@
 
         var Text = sourceID.value.trim();
         /*if(mode === "ENCODE") {
-            Text = decryptedAreaID.value.trim();
-        } else {
-            Text = encryptedAreaID.value.trim();
-        }*/
+         Text = decryptedAreaID.value.trim();
+         } else {
+         Text = encryptedAreaID.value.trim();
+         }*/
 
 
         if(!isKey(language, keyText) || (Text === "")) {
@@ -210,10 +225,10 @@
 
         outputID.value = newText;
         /*if(mode === "ENCODE") {
-            encryptedAreaID.value = newText;
-        } else {
-            decryptedAreaID.value = newText;
-        }*/
+         encryptedAreaID.value = newText;
+         } else {
+         decryptedAreaID.value = newText;
+         }*/
 
         textAreaAdjust(decryptedAreaID);
         textAreaAdjust(encryptedAreaID);
@@ -242,8 +257,10 @@
             keyLengths += "<span class=\"key-length\">" + (i + 2) + "</span>";
         }
 
+
         document.getElementById("columns").innerHTML = columns;
         document.getElementById("key-lengths").innerHTML = keyLengths;
+
     }
 
     function cryptanalysisStep2() {
@@ -256,6 +273,11 @@
         var text = sourceID.value;
         var VC = new VigenereCryptanalysis(languageID.value, text);
         var keyWord = VC.getKeyWord(keyLength);
+
+        console.log(htmlID.scrollTop);
+        if(htmlID.offsetHeight < htmlID.scrollHeight) {
+            htmlID.scrollTop = htmlID.scrollHeight;
+        }
 
         document.getElementById("possible-key").value = keyWord;
         document.getElementById("possible-text").value =
@@ -675,7 +697,6 @@
 
             }
 
-            console.log(this.avgICs.join("\n"));
 
             return this.avgICs;
         };
