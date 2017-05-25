@@ -87,7 +87,13 @@
     autoSize(keyID);
     decryptedAreaID.focus();
 
-    var inputEvent = new KeyboardEvent("input");
+    /*if(!document.createEvent) {
+        var inputEvent = new KeyboardEvent("input");
+    } else {*/
+        var inputEvent = document.createEvent("KeyboardEvent");
+        inputEvent.initEvent("input", true, false);
+    //}
+
 
     window.onresize = function() {
         textAreaAdjust(decryptedAreaID);
