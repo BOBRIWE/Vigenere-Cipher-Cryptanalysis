@@ -1,6 +1,6 @@
 {
     "name": "take_tmplate",
-    "version": "0.5.0",
+    "version": "0.5.0-pre",
     "devDependencies": {},
     "main": "index.html",
     "scripts": {
