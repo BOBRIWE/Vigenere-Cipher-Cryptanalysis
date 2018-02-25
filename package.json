@@ -1,10 +1,10 @@
 {
     "name": "take_tmplate",
-    "version": "0.6.0-pre",
+    "version": "0.7.0-pre",
     "devDependencies": {},
     "main": "index.html",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1 "
+        "test": "echo \"Error: no test specified changing stuff and ver\" && exit 1 "
     },
     "author ": "",
     "license ": "ISC ",
